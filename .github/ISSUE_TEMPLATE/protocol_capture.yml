@@ -1,0 +1,33 @@
+name: Protocol capture
+description: Contribute a redacted, action-labelled TD protocol observation
+title: "[Capture]: "
+labels: [protocol]
+body:
+  - type: checkboxes
+    attributes:
+      label: Evidence requirements
+      options:
+        - label: The capture contains no credentials, private addresses or household data.
+          required: true
+        - label: Each action was isolated, labelled and repeated at least three times.
+          required: true
+        - label: I distinguish measured facts from interpretations.
+          required: true
+  - type: textarea
+    attributes:
+      label: Exact hardware identifiers
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Electrical and serial setup
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Action timeline and frames
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed interpretation

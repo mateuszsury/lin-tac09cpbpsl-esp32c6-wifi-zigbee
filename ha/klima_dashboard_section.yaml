@@ -1,0 +1,91 @@
+# Reusable section for a Home Assistant Sections dashboard.
+# Adjust entity IDs after MQTT Discovery. Mushroom cards are optional.
+type: grid
+cards:
+  - type: custom:mushroom-title-card
+    title: Air conditioner
+    subtitle: Control and confirmed state
+    grid_options:
+      columns: 12
+
+  - type: thermostat
+    entity: climate.klima_wifi_klima
+    name: Air conditioner
+    show_current_as_primary: true
+    grid_options:
+      columns: 12
+
+  - type: tile
+    entity: climate.klima_wifi_klima
+    name: Mode and fan
+    icon: mdi:air-conditioner
+    features_position: bottom
+    features:
+      - type: climate-hvac-modes
+        style: icons
+        hvac_modes: ["off", cool, fan_only, dry]
+      - type: climate-fan-modes
+        style: icons
+        fan_modes: [low, high]
+    grid_options:
+      columns: 12
+
+  - type: custom:mushroom-entity-card
+    entity: switch.klima_wifi_quiet
+    name: Quiet
+    icon: mdi:weather-night
+    tap_action:
+      action: toggle
+    grid_options:
+      columns: 6
+
+  - type: custom:mushroom-entity-card
+    entity: switch.klima_wifi_jednostki_fahrenheit
+    name: Fahrenheit display
+    icon: mdi:temperature-fahrenheit
+    tap_action:
+      action: toggle
+    grid_options:
+      columns: 6
+
+  - type: custom:mushroom-entity-card
+    entity: sensor.klima_wifi_main_display_temperature
+    name: Reported temperature
+    icon: mdi:thermometer
+    grid_options:
+      columns: 6
+
+  - type: custom:mushroom-entity-card
+    entity: binary_sensor.klima_wifi_main_controller_link
+    name: Main controller link
+    icon: mdi:chip
+    grid_options:
+      columns: 6
+
+  - type: custom:mushroom-entity-card
+    entity: binary_sensor.klima_wifi_panel_link
+    name: Display panel link
+    icon: mdi:remote
+    grid_options:
+      columns: 6
+
+  - type: entities
+    title: Diagnostics
+    show_header_toggle: false
+    entities:
+      - entity: binary_sensor.klima_wifi_mitm_active
+        name: MITM active
+      - entity: binary_sensor.klima_wifi_command_pending
+        name: Command pending
+      - entity: sensor.klima_wifi_last_command_status
+        name: Last command
+      - entity: sensor.klima_wifi_bridge_profile
+        name: Bridge profile
+      - entity: sensor.klima_wifi_checksum_errors
+        name: Checksum errors
+      - entity: sensor.klima_wifi_framing_errors
+        name: Framing errors
+      - entity: sensor.klima_wifi_command_timeouts
+        name: Command timeouts
+    grid_options:
+      columns: 12

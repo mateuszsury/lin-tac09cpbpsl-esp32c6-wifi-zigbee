@@ -1,0 +1,62 @@
+Klima WiFi first ordered remote-button session, 2026-08-12
+
+Interpretation notice:
+  The wire frames are authentic, but the originally reported action positions
+  after the third MODE press were ambiguous. The later isolated session in
+  isolated-features-20260812.txt supersedes feature semantics: Quiet=bit 10,
+  Units=bit 08, Timer=bit 20, and there are exactly three appliance modes.
+
+Source marker:
+  REMOTE BUTTON SESSION START
+
+User-reported order:
+  1. POWER ON
+  2. TEMP+
+  3. TEMP-
+  4. FAN
+  5. FAN
+  6. MODE 1/4
+  7. MODE 2/4
+  8. MODE 3/4
+  9. MODE 4/4
+ 10. QUIET
+ 11. UNIT CHANGE
+ 12. TIMER/HOUR SETTING
+ 13. POWER OFF
+
+All frames below are authentic panel event frames. They are 15 bytes, use
+9600-8N1, and XOR over the complete frame is 0x10.
+
+ 1 POWER ON    54 44 0B 12 31 80 12 00 00 40 00 00 00 00 FA
+ 2 TEMP+       54 44 0B 12 31 80 13 00 00 42 00 00 00 00 F9
+ 3 TEMP-       54 44 0B 12 31 80 12 00 00 40 00 00 00 00 FA
+ 4 FAN         54 44 0B 12 33 80 12 00 00 40 00 00 00 00 F8
+ 5 FAN         54 44 0B 12 31 80 12 00 00 40 00 00 00 00 FA
+ 6 MODE 1/4    54 44 0B 12 22 80 12 00 00 40 00 00 00 00 E9
+ 7 MODE 2/4    54 44 0B 12 43 80 12 00 00 40 00 00 00 00 88
+ 8 MODE 3/4    54 44 0B 12 31 80 12 00 00 40 00 00 00 00 FA
+ 9 MODE 4/4    54 44 0B 12 31 90 12 00 00 40 00 00 00 00 EA
+10 QUIET       54 44 0B 12 31 80 12 00 00 40 00 00 00 00 FA
+11 UNIT CHANGE 54 44 0B 12 31 A0 12 00 00 40 00 00 00 00 DA
+12 TIMER/HOUR  54 44 0B 12 31 A0 12 00 00 40 00 00 00 00 DA
+13 POWER OFF   54 44 0B 12 31 00 12 00 00 40 00 00 00 00 7A
+
+Observed direct deltas before the ambiguous region, zero-based indexes:
+  POWER:      panel/main [5] bit 0x80
+  TEMP:       panel [6] Celsius and [9] rounded Fahrenheit
+  FAN:        panel/main [4] 0x31 <-> 0x33
+  MODE 1..3: panel [4] 0x31 -> 0x22 -> 0x43 -> 0x31
+               main normalizes panel 0x22 to 0x21
+  Rows 9-13: preserve raw evidence only; use the isolated session for labels
+
+Interpretation boundary:
+  Do not use the first session alone to label byte-5 feature bits. The isolated
+  repetition resolves them without discarding this session's raw frames.
+
+Session integrity:
+  13 panel events and 13 corresponding main responses
+  main response delay about 70-80 ms
+  device checksum errors: 0
+  device framing errors: 0
+  persistent-capture dropped records: 0
+  persistent-capture write errors: 0

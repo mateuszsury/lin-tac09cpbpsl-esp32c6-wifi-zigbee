@@ -1,0 +1,5 @@
+# Explicit active artifact marker.  Selection is controlled by
+# KLIMA_BRIDGE_MODE=MITM_NTS; this file does not enable it implicitly.
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y

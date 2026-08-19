@@ -1,0 +1,72 @@
+Klima WiFi protocol baseline, 2026-08-12
+
+Hardware:
+  display TD-YD-PSL-XS V1.0 / 810901115C
+  main controller 810901123B / D10B
+
+Electrical: 3.3 V UART, idle high
+Serial: 9600 baud, 8 data bits, no parity, 1 stop bit
+Cadence: approximately 100 ms in each direction
+
+No-jumper MITM wiring:
+  panel TX -> GPIO5 (panel-side RX)
+  GPIO4 -> panel RX (panel-side TX)
+  main TX -> GPIO6 (main-side RX)
+  GPIO7 -> main RX (main-side TX)
+
+Temporary passive bypass wiring (currently installed):
+  GPIO4 <-> GPIO6
+  GPIO5 <-> GPIO7
+  passive firmware listens on GPIO4 and GPIO7; every link GPIO is input-only
+
+Panel -> main, complete OFF/18 C frame, 15 bytes:
+  54 44 0B 11 31 00 12 00 00 40 00 00 00 00 79
+
+Main -> panel, complete OFF/18 C frame, 22 bytes:
+  54 44 12 11 31 00 12 00 00 00 00 2C 2C 00 40 0A 00 00 00 00 00 6A
+
+For both complete frame types XOR of every byte equals 0x10. The last byte is
+therefore generated as XOR(all preceding bytes) XOR 0x10.
+
+Panel field correlations (zero-based indexes):
+  [0..1]  54 44 (ASCII TD header)
+  [2]     0B (length/type; 0x0B + 4 = complete 15-byte frame)
+  [3]     11 stable, 12 one-shot event/update
+  [4]     state enum: 31, 22, 43, 33 observed
+  [5]     bit 80 follows power
+  [6]     setpoint in Celsius
+  [9]     setpoint mirrored in rounded Fahrenheit
+  [13]    opaque; 20 correlated with OFF in one controlled session
+  [14]    checksum
+
+Main field correlations:
+  [3]     11 stable, 12 event/update
+  [4]     state enum; panel 22 is normalized to main 21
+  [5]     bit 80 follows power
+  [6]     setpoint Celsius
+  [8]     operation/status candidate (02 when powered in captured session)
+  [11..12] opaque sensor/status values
+  [14]    setpoint mirrored in rounded Fahrenheit
+  [15]    constant 0A in all captures
+  [21]    checksum
+
+Captured action deltas:
+  POWER ON: panel [5] 00 -> 80
+  TEMP +18->19: [6] 12 -> 13, [9] 40 -> 42
+  TEMP -19->18: reverse
+  MODE cycle: [4] 31 -> 22 -> 43 -> 31
+  FAN action in 31 state: [4] 31 <-> 33
+  POWER OFF: [5] 80 -> 00 and one-session [13] 00 -> 20
+
+The appliance manual has Cool, Fan and Dry modes. This makes 31/33=Cool,
+22=Fan and 43=Dry a strong working map, but only the deltas above are direct
+protocol facts. A later user-confirmed two-speed capture resolved low-nibble 3
+as High speed in Cool; see isolated-features-20260812.txt.
+The later isolated capture also resolved Timer as byte-5 bit 20. Sleep and
+Swing remain unlabelled and are forwarded transparently.
+
+Raw evidence files (ignored by Git):
+  captures/tmp/main-idle-and-actions-01.jsonl
+  captures/tmp/main-9600-actions-02.jsonl
+  captures/tmp/protocol-analysis-01.txt
+  captures/tmp/jumper-passive-47-01.jsonl

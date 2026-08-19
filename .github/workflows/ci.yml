@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  host-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Build C protocol tests
+        run: |
+          cmake -S tests -B build/host-tests
+          cmake --build build/host-tests --parallel
+          ctest --test-dir build/host-tests --output-on-failure
+      - name: Run Python tests
+        run: |
+          python3 -m pip install --disable-pip-version-check pytest
+          python3 -m pytest -q tests
+      - name: Validate Zigbee2MQTT converter
+        run: node --check zigbee2mqtt/klima_wifi_converter.js
+      - name: Reject whitespace errors
+        run: git diff --check
+
+  esp-idf:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [SNIFFER, BRIDGE, MITM_NTS]
+        transport: [MQTT, ZIGBEE]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Build ESP32-C6 firmware
+        run: |
+          docker run --rm \
+            -v "$PWD:/project" \
+            -w /project \
+            espressif/idf:v5.3.2 \
+            idf.py -B "build/ci-${{ matrix.profile }}-${{ matrix.transport }}" \
+              -DKLIMA_BRIDGE_MODE="${{ matrix.profile }}" \
+              -DKLIMA_HA_TRANSPORT="${{ matrix.transport }}" build
