@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Security vulnerability
-    url: https://github.com/mateuszsury/esp32-c6-air-conditioner-mitm/security/advisories/new
+    url: https://github.com/mateuszsury/lin-tac09cpbpsl-esp32c6-wifi-zigbee/security/advisories/new
     about: Report credentials, unsafe behavior or security defects privately.
   - name: Wiring and installation guide
-    url: https://github.com/mateuszsury/esp32-c6-air-conditioner-mitm/blob/main/docs/INSTALLATION.md
+    url: https://github.com/mateuszsury/lin-tac09cpbpsl-esp32c6-wifi-zigbee/blob/main/docs/INSTALLATION.md
     about: Check the supported hardware, wiring and recovery steps first.

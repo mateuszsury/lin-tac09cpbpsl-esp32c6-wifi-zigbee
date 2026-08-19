@@ -12,7 +12,7 @@
 
 Use the bug-report template for reproducible firmware or integration failures.
 Use the protocol-capture template for new UART evidence. Security issues belong
-in a private [GitHub security advisory](https://github.com/mateuszsury/esp32-c6-air-conditioner-mitm/security/advisories/new).
+in a private [GitHub security advisory](https://github.com/mateuszsury/lin-tac09cpbpsl-esp32c6-wifi-zigbee/security/advisories/new).
 
 ## What maintainers need
 

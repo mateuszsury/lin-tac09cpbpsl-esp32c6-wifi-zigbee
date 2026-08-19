@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
-  <title id="title">Klima WiFi ESP32-C6 air-conditioner bridge</title>
-  <desc id="desc">A local UART MITM bridge connecting an air-conditioner panel and main controller to MQTT, Home Assistant and Zigbee2MQTT.</desc>
+  <title id="title">LIN TAC09CPBPSL Wi-Fi and Zigbee control with ESP32-C6</title>
+  <desc id="desc">A local UART MITM bridge connecting the LIN TAC09CPBPSL panel and main controller to MQTT, Home Assistant and Zigbee2MQTT.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#071a2e"/>
@@ -18,8 +18,8 @@
   <circle cx="1090" cy="40" r="190" fill="#42c7ff" opacity=".08"/>
   <circle cx="1030" cy="380" r="230" fill="#65e6b4" opacity=".06"/>
   <rect x="68" y="63" width="9" height="154" rx="4.5" fill="url(#accent)"/>
-  <text x="108" y="126" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="64" font-weight="700">Klima WiFi</text>
-  <text x="108" y="177" fill="#b9d9eb" font-family="Segoe UI,Arial,sans-serif" font-size="28">ESP32-C6 air-conditioner MITM bridge</text>
+  <text x="108" y="126" fill="#fff" font-family="Segoe UI,Arial,sans-serif" font-size="58" font-weight="700">LIN TAC09CPBPSL</text>
+  <text x="108" y="177" fill="#b9d9eb" font-family="Segoe UI,Arial,sans-serif" font-size="28">Wi-Fi and Zigbee control with ESP32-C6</text>
   <text x="108" y="230" fill="#7fa9c2" font-family="Segoe UI,Arial,sans-serif" font-size="20">UART reverse engineering · MQTT · Home Assistant · Zigbee2MQTT · OTA</text>
   <g transform="translate(96 290)" filter="url(#shadow)" font-family="Segoe UI,Arial,sans-serif">
     <rect x="0" y="0" width="190" height="72" rx="16" fill="#102c43" stroke="#3d7493"/>

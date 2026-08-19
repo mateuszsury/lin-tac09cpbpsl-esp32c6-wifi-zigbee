@@ -2,6 +2,8 @@
 
 ## 0.9.39 - 2026-08-19
 
+- identified and documented the validated appliance as the black compact LIN
+  TAC09CPBPSL;
 - completed KAmodNTS0104PW four-channel production topology;
 - moved main-RX output to ESP32-C6 GPIO0;
 - added response-confirmed MQTT/HTTP command injection;

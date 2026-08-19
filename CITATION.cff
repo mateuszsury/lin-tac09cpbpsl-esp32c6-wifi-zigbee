@@ -1,16 +1,17 @@
 cff-version: 1.2.0
 message: "If this software or protocol research helps your work, cite this repository."
-title: "Klima WiFi: ESP32-C6 Air Conditioner MITM Bridge"
+title: "LIN TAC09CPBPSL Wi-Fi and Zigbee Control with ESP32-C6"
 type: software
 authors:
   - alias: mateuszsury
-repository-code: "https://github.com/mateuszsury/esp32-c6-air-conditioner-mitm"
-url: "https://github.com/mateuszsury/esp32-c6-air-conditioner-mitm"
+repository-code: "https://github.com/mateuszsury/lin-tac09cpbpsl-esp32c6-wifi-zigbee"
+url: "https://github.com/mateuszsury/lin-tac09cpbpsl-esp32c6-wifi-zigbee"
 version: 0.9.39
 date-released: 2026-08-20
 license: MIT
 keywords:
   - ESP32-C6
+  - LIN TAC09CPBPSL
   - air conditioner
   - UART
   - MITM bridge

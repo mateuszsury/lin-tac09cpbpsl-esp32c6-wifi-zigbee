@@ -1,18 +1,19 @@
-# ESP32-C6 Air Conditioner Wi-Fi & Zigbee MITM Bridge
+# LIN TAC09CPBPSL Wi-Fi & Zigbee Control with ESP32-C6
 
-![Klima WiFi: ESP32-C6 air-conditioner bridge](docs/assets/klima-wifi-banner.svg)
+![LIN TAC09CPBPSL ESP32-C6 Wi-Fi and Zigbee controller](docs/assets/klima-wifi-banner.svg)
 
-[![CI](https://github.com/mateuszsury/esp32-c6-air-conditioner-mitm/actions/workflows/ci.yml/badge.svg)](https://github.com/mateuszsury/esp32-c6-air-conditioner-mitm/actions/workflows/ci.yml)
+[![CI](https://github.com/mateuszsury/lin-tac09cpbpsl-esp32c6-wifi-zigbee/actions/workflows/ci.yml/badge.svg)](https://github.com/mateuszsury/lin-tac09cpbpsl-esp32c6-wifi-zigbee/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![ESP-IDF 5.3.2](https://img.shields.io/badge/ESP--IDF-5.3.2-E7352C.svg)](https://github.com/espressif/esp-idf/releases/tag/v5.3.2)
 [![ESP32-C6](https://img.shields.io/badge/target-ESP32--C6-000000.svg)](https://www.espressif.com/en/products/socs/esp32-c6)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-MQTT%20Discovery-41BDF5.svg)](docs/HOME_ASSISTANT.md)
 [![Zigbee2MQTT](https://img.shields.io/badge/Zigbee2MQTT-supported-F7C325.svg)](zigbee2mqtt/klima_wifi_converter.js)
 
-Keep the original controls and add local smart-home integration to a portable
-air conditioner. Klima WiFi places an ESP32-C6 between the display panel and
-main controller, forwards their proprietary UART traffic in both directions,
-decodes the appliance state, and injects response-confirmed commands.
+Add local Wi-Fi, MQTT, Home Assistant and Zigbee2MQTT control to the black LIN
+TAC09CPBPSL compact portable air conditioner without removing its original
+panel. Klima WiFi places an ESP32-C6 between the display and main controller,
+forwards their proprietary UART traffic in both directions, decodes the
+appliance state, and injects response-confirmed commands.
 
 The firmware provides a local web UI, OTA updates, MQTT Discovery for Home
 Assistant, and a Zigbee2MQTT build. It does not require a vendor cloud account.
@@ -28,16 +29,20 @@ The protocol and active bridge were validated on this exact OEM board pair:
 
 | Part | Identifier |
 |---|---|
+| Air conditioner | LIN TAC09CPBPSL, black compact portable model |
 | Display PCB | `TD-YD-PSL-XS V1.0` / `810901115C` |
 | Main controller | `810901123B`, variant `D10B` |
 | Protocol | `TD` UART, 9600 baud, 8N1 |
 | Level translator | KAmodNTS0104PW / NTS0104 |
 | Controller | ESP32-C6 |
 
-These boards appear in selected TCL, iFFALCON, LIN, Equation and related OEM
-portable air conditioners. A matching case or model name does not prove board
-or protocol compatibility. Verify the PCB identifiers, voltages and frame
-format before enabling an active profile.
+The complete implementation was tested on the LIN TAC09CPBPSL. The same boards
+appear in selected TCL, iFFALCON, Equation and related OEM portable air
+conditioners, but a matching case or similar model name does not prove protocol
+compatibility. Verify the PCB identifiers, voltages and frame format before
+enabling an active profile.
+
+Polish retail name: **Klimatyzator Kompakt LIN Czarny TAC09CPBPSL**.
 
 ## What it controls
 
@@ -113,8 +118,8 @@ before applying power.
 Windows and WSL example:
 
 ```powershell
-git clone https://github.com/mateuszsury/esp32-c6-air-conditioner-mitm.git
-Set-Location esp32-c6-air-conditioner-mitm
+git clone https://github.com/mateuszsury/lin-tac09cpbpsl-esp32c6-wifi-zigbee.git
+Set-Location lin-tac09cpbpsl-esp32c6-wifi-zigbee
 $env:KLIMA_WSL_IDF_EXPORT = '/home/<user>/esp/esp-idf/export.sh'
 Copy-Item main\klima_secrets.example.h main\klima_secrets_local.h
 .\tools\build_profiles.ps1 -Profile SNIFFER -Transport MQTT -Clean -Manifest

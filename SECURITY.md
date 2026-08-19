@@ -7,7 +7,7 @@ Only the current `main` branch is supported while the project is pre-1.0.
 ## Reporting
 
 Report vulnerabilities through the repository's private
-[GitHub Security Advisory form](https://github.com/mateuszsury/esp32-c6-air-conditioner-mitm/security/advisories/new)
+[GitHub Security Advisory form](https://github.com/mateuszsury/lin-tac09cpbpsl-esp32c6-wifi-zigbee/security/advisories/new)
 instead of a public issue. Do not include real Wi-Fi, MQTT, Home Assistant or
 `X-Klima-Token` secrets in reports, captures or logs.
 
