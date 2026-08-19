@@ -22,7 +22,7 @@ class MarkerTests(unittest.TestCase):
 
     def test_rejects_oversized_utf8_label(self) -> None:
         with self.assertRaises(ValueError):
-            mark_event.validate_label("ą" * 48)
+            mark_event.validate_label("é" * 48)
 
 
 if __name__ == "__main__":

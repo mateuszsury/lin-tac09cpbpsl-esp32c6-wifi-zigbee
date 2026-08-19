@@ -42,7 +42,7 @@ conditioners, but a matching case or similar model name does not prove protocol
 compatibility. Verify the PCB identifiers, voltages and frame format before
 enabling an active profile.
 
-Polish retail name: **Klimatyzator Kompakt LIN Czarny TAC09CPBPSL**.
+Retail listing: **LIN TAC09CPBPSL black compact portable air conditioner**.
 
 ## What it controls
 

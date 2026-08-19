@@ -9,8 +9,8 @@ UI = ROOT / "main" / "web_ui.h"
 
 def test_ui_is_fail_closed_and_describes_the_final_no_jumper_topology():
     source = UI.read_text(encoding="utf-8")
-    assert "Sterowanie niedostępne: wymagane są świeże ramki" in source
-    assert "zworek" not in source
+    assert "Control unavailable: fresh frames are required from both directions." in source
+    assert "bypass jumper" not in source.lower()
 
 
 def test_off_state_does_not_present_placeholder_temperature_as_real():
@@ -26,16 +26,18 @@ def test_verified_feature_controls_and_oe_status_are_visible():
     assert "id='units' class='control'" in source
     assert "id='timer' class='control'" not in source
     assert "units_fahrenheit:$('#units').value==='true'" in source
-    assert "Timer jest monitorowany" in source
+    assert "Timer state is monitored." in source
     assert "timer:$('#timer')" not in source
     assert "id='oe'" in source
 
 
-def test_utf8_polish_text_is_not_mojibake():
+def test_english_ui_text_and_utf8_symbols_are_not_mojibake():
     source = UI.read_text(encoding="utf-8")
-    assert "Łączenie" in source
-    assert "Wyczyść" in source
-    assert "pamięć" in source
+    assert "Connecting" in source
+    assert "Clear" in source
+    assert "Free heap" in source
+    assert "18–32°C" in source
+    assert "— (raw " in source
     for broken in ("Ĺ", "Ä", "â€”", "Â"):
         assert broken not in source
 

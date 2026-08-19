@@ -460,7 +460,7 @@ static void publish_discovery(void)
     publish_feature_discovery("quiet", "Quiet", "{{ 'ON' if value_json.quiet else 'OFF' }}",
                               s_mqtt.quiet_set_topic);
     vTaskDelay(pdMS_TO_TICKS(MQTT_DISCOVERY_STAGGER_MS));
-    publish_feature_discovery("units_fahrenheit", "Jednostki Fahrenheit",
+    publish_feature_discovery("units_fahrenheit", "Fahrenheit display units",
                               "{{ 'ON' if value_json.units_fahrenheit else 'OFF' }}",
                               s_mqtt.units_set_topic);
     vTaskDelay(pdMS_TO_TICKS(MQTT_DISCOVERY_STAGGER_MS));

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.40 - 2026-08-20
+
+- translated the embedded web dashboard, USB recovery prompts and Home
+  Assistant discovery labels into English;
+- removed the Polish retail phrase from the public README;
+- added a repository-wide English-language regression test.
+
 ## 0.9.39 - 2026-08-19
 
 - identified and documented the validated appliance as the black compact LIN
