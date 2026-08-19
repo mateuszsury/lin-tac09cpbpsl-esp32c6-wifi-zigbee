@@ -1,0 +1,57 @@
+Klima WiFi isolated MODE / QUIET / UNITS / TIMER session, 2026-08-12
+
+Initial state:
+  power OFF, Cool, 18 C, feature byte 00
+
+User sequence:
+  POWER ON; MODE x4; QUIET x2; two additional MODE presses; UNITS x2;
+  TIMER; TEMP+; TEMP-; TIMER; POWER OFF.
+
+The wire contained 17 event groups. One additional MODE-like event occurred
+0.700 seconds after the preceding MODE event, consistent with an accidental
+extra press or key auto-repeat. It is retained rather than discarded.
+
+Panel event frames and direct state result:
+
+ 1 POWER ON       54 44 0B 12 31 80 12 00 00 40 00 00 00 00 FA  power on
+ 2 MODE           54 44 0B 12 22 80 12 00 00 40 00 00 00 00 E9  Cool -> Fan
+ 3 MODE           54 44 0B 12 43 80 12 00 00 40 00 00 00 00 88  Fan -> Dry
+ 4 MODE           54 44 0B 12 31 80 12 00 00 40 00 00 00 00 FA  Dry -> Cool
+ 5 MODE           54 44 0B 12 22 80 12 00 00 40 00 00 00 00 E9  Cool -> Fan
+ 6 QUIET          54 44 0B 12 22 90 12 00 00 40 00 00 00 00 F9  bit 10 set
+ 7 QUIET          54 44 0B 12 22 80 12 00 00 40 00 00 00 00 E9  bit 10 clear
+ 8 reported MODE  54 44 0B 12 22 80 12 00 00 40 00 00 00 00 E9  event, no delta
+ 9 reported MODE  54 44 0B 12 43 80 12 00 00 40 00 00 00 00 88  Fan -> Dry
+10 extra event    54 44 0B 12 31 80 12 00 00 40 00 00 00 00 FA  Dry -> Cool
+11 UNITS          54 44 0B 12 31 88 12 00 00 40 00 00 00 00 F2  bit 08 set
+12 UNITS          54 44 0B 12 31 80 12 00 00 40 00 00 00 00 FA  bit 08 clear
+13 TIMER          54 44 0B 12 31 A0 12 00 00 40 00 00 00 00 DA  bit 20 set
+14 TEMP+          54 44 0B 12 31 A0 13 00 00 42 00 00 00 00 D9  18 -> 19 C
+15 TEMP-          54 44 0B 12 31 A0 12 00 00 40 00 00 00 00 DA  19 -> 18 C
+16 TIMER          54 44 0B 12 31 80 12 00 00 40 00 00 00 00 FA  bit 20 clear
+17 POWER OFF      54 44 0B 12 31 00 12 00 00 40 00 00 00 00 7A  power off
+
+Verified semantic map:
+  panel mode code 31 = Cool
+  panel mode code 22 = Fan; main normalizes it to 21
+  panel/main mode code 43 = Dry / dehumidification
+  Cool code 31 = Low fan speed; Cool code 33 = High fan speed
+  byte 5 bit 80 = power
+  byte 5 bit 10 = Quiet state
+  byte 5 bit 08 = Celsius/Fahrenheit unit-selection state
+  byte 5 bit 20 = Timer state
+  panel byte 6 = retained Cool setpoint in Celsius
+  panel byte 9 = retained Cool setpoint in rounded Fahrenheit
+
+Contextual main-board temperature:
+  In Cool at 18 C, main [6]/[14] = 12/40 (18 C / 64 F setpoint).
+  In Fan and Dry, main [6]/[14] = 18/4B (24 C / 75 F), while the panel retains
+  12/40. Therefore main [6]/[14] are display-temperature fields whose meaning
+  depends on mode; they are not always the requested setpoint.
+
+Integrity:
+  17 panel event frames and 17 main event responses
+  response latency approximately 70-80 ms
+  complete-frame XOR 10 throughout
+  checksum errors 0, post-sync framing errors 0
+  persistent capture drops/write errors 0

@@ -1,0 +1,35 @@
+# ESP-IDF build output
+build/
+build-*/
+managed_components/
+dependencies.lock
+sdkconfig
+sdkconfig.old
+
+# Private device backups and local measurements
+.local/
+main/klima_secrets_local.h
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Temporary captures; curated protocol evidence is committed under captures/reference
+captures/tmp/
+
+# Browser/test reports and packet captures
+playwright-report/
+test-results/
+*.log
+*.pcap
+*.pcapng

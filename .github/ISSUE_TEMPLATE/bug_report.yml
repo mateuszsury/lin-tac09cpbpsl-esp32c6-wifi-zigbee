@@ -1,0 +1,46 @@
+name: Bug report
+description: Report reproducible firmware, protocol or integration behavior
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: checkboxes
+    attributes:
+      label: Safety and privacy
+      options:
+        - label: I removed credentials, private IPs and unrelated Home Assistant data.
+          required: true
+        - label: I will not attach raw firmware containing embedded credentials.
+          required: true
+  - type: input
+    attributes:
+      label: Firmware version and source commit
+      placeholder: v0.9.39 / full commit SHA
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Build profile
+      options: [SNIFFER, PASSIVE, PANEL_DIAG, PANEL_BENCH, BRIDGE, MITM_NTS]
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Transport
+      options: [MQTT, Zigbee, None]
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Hardware
+      description: Board IDs, ESP32-C6 board, translator and exact wiring differences.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reproduction and observed result
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Redacted logs and counters
+      description: Include both link ages, frame/error counters and command status.
