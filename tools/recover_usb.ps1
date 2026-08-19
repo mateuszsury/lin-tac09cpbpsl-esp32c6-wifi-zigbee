@@ -11,17 +11,17 @@ $image = (Resolve-Path -LiteralPath (Join-Path $root $Firmware)).Path
 $actualSha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $image).Hash
 
 if ($ExpectedSha256 -and $actualSha256 -cne $ExpectedSha256) {
-    throw "Nieprawidlowy SHA-256 obrazu: $actualSha256 (oczekiwano $ExpectedSha256)"
+    throw "Firmware SHA-256 mismatch: $actualSha256 (expected $ExpectedSha256)"
 }
 
-Write-Host "Obraz: $image"
+Write-Host "Firmware image: $image"
 Write-Host "SHA-256: $actualSha256"
 
-Write-Host "UWAGA: klimatyzator musi byc odlaczony od 230 V."
-Write-Host "ESP musi byc odlaczone od GPIO4/5/6/7 i GND klimatyzatora."
-$confirmation = Read-Host "Wpisz ODLACZONE, aby kontynuowac"
-if ($confirmation -cne "ODLACZONE") {
-    throw "Przerwano bez zmian"
+Write-Host "WARNING: disconnect the air conditioner from 230 V mains power."
+Write-Host "Disconnect the ESP from the air conditioner's GPIO4/5/6/7 and GND lines."
+$confirmation = Read-Host "Enter DISCONNECTED to continue"
+if ($confirmation -cne "DISCONNECTED") {
+    throw "Cancelled without changes"
 }
 
 & py -3 -m esptool `
@@ -32,8 +32,8 @@ if ($confirmation -cne "ODLACZONE") {
     --after hard-reset `
     write-flash 0x10000 $image
 if ($LASTEXITCODE -ne 0) {
-    throw "esptool zakonczyl sie kodem $LASTEXITCODE"
+    throw "esptool exited with code $LASTEXITCODE"
 }
 
-Write-Host "Wgrano $image"
-Write-Host "Poczekaj na http://klima-wifi.local/api/status, a potem odlacz USB przed ponownym polaczeniem z klimatyzatorem."
+Write-Host "Flashed $image"
+Write-Host "Wait for http://klima-wifi.local/api/status, then disconnect USB before reconnecting the air conditioner."

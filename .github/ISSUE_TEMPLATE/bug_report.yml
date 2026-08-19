@@ -14,7 +14,7 @@ body:
   - type: input
     attributes:
       label: Firmware version and source commit
-      placeholder: v0.9.39 / full commit SHA
+      placeholder: v0.9.40 / full commit SHA
     validations:
       required: true
   - type: dropdown

@@ -49,9 +49,9 @@ requiring the CI jobs before changing visibility.
 5. Tag using semantic versioning, for example:
 
 ```powershell
-git tag -a v0.9.39 -m "Klima WiFi v0.9.39"
-git push origin v0.9.39
-gh release create v0.9.39 --generate-notes
+git tag -a v<version> -m "Klima WiFi v<version>"
+git push origin v<version>
+gh release create v<version> --generate-notes
 ```
 
 Do not advertise Zigbee as production-ready until a real Zigbee2MQTT
