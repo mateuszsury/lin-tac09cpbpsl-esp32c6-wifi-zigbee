@@ -21,7 +21,17 @@ def main():
         known = subprocess.run(['git', 'cat-file', '-e', base + '^{commit}'], capture_output=True).returncode == 0
         # After an intentional history migration, old revisions need not be in
         # a fresh checkout. Validate the replacement history rather than fail.
-        commits = git('rev-list', base + '..' + head if known else head).splitlines()
+        revision_range = base + '..' + head if known else head
+        if not known and os.environ.get('DEFAULT_BRANCH'):
+            default_ref = 'refs/remotes/origin/' + os.environ['DEFAULT_BRANCH']
+            ancestor = subprocess.run(['git', 'merge-base', head, default_ref], capture_output=True, text=True)
+            if ancestor.returncode == 0 and git('rev-parse', default_ref) != git('rev-parse', head):
+                # An amended feature branch may lose its old before object.
+                # Check its new changes against default, without rechecking
+                # protected pre-policy history. Replaced default histories
+                # still validate in full because default_ref equals head.
+                revision_range = ancestor.stdout.strip() + '..' + head
+        commits = git('rev-list', revision_range).splitlines()
     else:
         commits = [git('rev-parse', head)]
     failures = []
@@ -30,8 +40,8 @@ def main():
         owned = email in OWN_EMAILS or email.lower() == 'noreply@anthropic.com'
         if owned and (name != CANONICAL_NAME or email != CANONICAL_EMAIL):
             failures.append(sha[:12] + ': use the configured maintainer Git identity')
-        if re.search(r'^Co-authored-by:.*noreply@anthropic\.com', message, re.I | re.M):
-            failures.append(sha[:12] + ': remove AI co-author attribution from maintainer-owned changes')
+        if owned and re.search(r'^(?:Co-authored-by:.*noreply@anthropic\.com|Claude-Session:)', message, re.I | re.M):
+            failures.append(sha[:12] + ': remove AI attribution from maintainer-owned changes')
     if failures:
         raise SystemExit('\n'.join(failures))
     print(f'Author policy: {len(commits)} new commit(s) checked; real contributors preserved')
