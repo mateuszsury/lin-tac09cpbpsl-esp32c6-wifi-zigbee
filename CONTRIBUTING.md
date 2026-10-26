@@ -70,3 +70,7 @@ tools as authors or co-authors. Preserve genuine human contributions, upstream
 history, copyright notices and third-party licenses. Keep release provenance
 and checksums intact. Describe the purpose of each change and record relevant
 validation; avoid generic upload messages and environment-specific worktree names.
+
+The historical `Klima WiFi Contributors` identity is retained as a collective
+identity unless its ownership is explicitly confirmed. Do not map it to a single
+person based only on repository ownership; the original copyright stays intact.

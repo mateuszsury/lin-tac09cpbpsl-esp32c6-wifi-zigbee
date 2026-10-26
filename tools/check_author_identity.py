@@ -7,8 +7,7 @@ import subprocess
 CANONICAL_NAME = 'Mateusz Sury'
 CANONICAL_EMAIL = '66475105+mateuszsury@users.noreply.github.com'
 OWN_EMAILS = {CANONICAL_EMAIL, 'mateuszsury@users.noreply.github.com',
-              'mateusz.sury25@gmail.com', 'mateuszsury25@gmail.com',
-              'klima-wifi@users.noreply.github.com'}
+              'mateusz.sury25@gmail.com', 'mateuszsury25@gmail.com'}
 
 def git(*args):
     return subprocess.check_output(['git', *args], text=True).strip()
