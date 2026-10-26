@@ -33,3 +33,7 @@ test-results/
 *.log
 *.pcap
 *.pcapng
+
+# Generated development files
+*.egg-info/
+dist/
