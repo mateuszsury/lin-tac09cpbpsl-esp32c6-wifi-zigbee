@@ -23,6 +23,14 @@ Assistant, and a Zigbee2MQTT build. It does not require a vendor cloud account.
 > low-voltage interface and never change wiring while the appliance is powered.
 > Read [the hardware safety section](docs/HARDWARE.md#safety-boundary) first.
 
+## Project overview
+
+An ESP32-C6 bridge for LIN air-conditioner control, Wi-Fi, MQTT and Zigbee integration.
+
+![TAC09CPBPSL Climate Controller — Device-specific bridge overview. Retain the documented wiring, compatibility and hardware-validation requirements.](docs/assets/presentation/overview.svg)
+
+Device-specific bridge overview. Retain the documented wiring, compatibility and hardware-validation requirements.
+
 ## Confirmed compatibility
 
 The protocol and active bridge were validated on this exact OEM board pair:
